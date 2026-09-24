@@ -759,7 +759,7 @@ body::after{
 }
 .money-heart{font-size:25px;animation:heartPulse 1.4s ease-in-out infinite}
 .money-dots{letter-spacing:.28em;color:var(--gold);font-size:20px}
-.money-steps{display:flex;gap:7px;margin-top:4px}
+.money-steps{display:flex;gap:7px;margin-top:4px;justify-content:center}
 .money-steps span{width:6px;height:6px;border-radius:50%;background:rgba(101,28,59,.2)}
 .money-steps span.active{width:20px;border-radius:999px;background:var(--gold)}
 .money-reveal-number{min-height:62px;display:flex;align-items:center;justify-content:center}
@@ -1190,7 +1190,7 @@ body::after{
               <path d="M6 6v0M18 18v0"/>
             </svg>
             <div class="reveal-title" id="hidden-g2-title">¡Encontraste tu regalo!</div>
-            <div class="reveal-sub" id="hidden-g2-sub">Pero todavía no voy a decirte cuánto es... ❤️</div>
+            <div class="reveal-sub" id="hidden-g2-sub">❤️ Pero aun no es el momento ... 😂</div>
           </div>
           <canvas class="scratch-canvas" id="scratch-2" aria-label="Tarjeta para raspar"></canvas>
         </div>
@@ -1202,7 +1202,7 @@ body::after{
           Desliza el dedo sobre el recuadro
         </div>
 
-        <button class="progress-note" id="note-2" type="button" onclick="startMoneyFlow()" aria-label="Continuar con el regalo">Descubierto. Continuar →</button>
+        <button class="progress-note" style="font-size:20px" id="note-2" type="button" onclick="startMoneyFlow()" aria-label="Continuar con el regalo">Descubierto. Continuar →</button>
 
         <div class="money-flow" id="money-flow" aria-live="polite">
           <div class="money-icon">💌</div>
@@ -1211,14 +1211,14 @@ body::after{
           <div class="money-step" id="money-step-1">
             <div class="money-title">¡Encontraste tu regalo!</div>
             <div class="money-text">Pero todavía no voy a decirte qué es...<br><br>❤️ Solo tienes que reclamarlo.</div>
-            <button class="money-button" type="button" onclick="showMoneyStep(2)">💝 Reclamar mi regalo</button>
+            <br/><button class="money-button" type="button" onclick="showMoneyStep(2)">💝 Reclamar mi regalo</button>
             <div class="money-steps"><span class="active"></span><span></span><span></span><span></span></div>
           </div>
 
           <div class="money-step" id="money-step-2" hidden>
             <div class="money-title">Tu regalo está listo</div>
             <div class="money-text">Este regalo lo preparé pensando en ti.<br><br>No necesitas saber cuánto es todavía.<br><br>Solo confirma que quieres recibirlo. ❤️</div>
-            <button class="money-button" type="button" onclick="showMoneyStep(3)">✨ Quiero mi regalo</button>
+            <br/><button class="money-button" type="button" onclick="showMoneyStep(3)">✨ Quiero mi regalo</button>
             <div class="money-steps"><span></span><span class="active"></span><span></span><span></span></div>
           </div>
 
@@ -1227,7 +1227,7 @@ body::after{
             <div class="money-text">Tu regalo llegará a tu Nequi ❤️<br><br>Ahora solo espera ese pequeño detalle que preparé para ti.</div>
             <div class="money-dots">✦ ✦ ✦</div>
             <div class="money-small">Cuando lo recibas, continúa para descubrir la sorpresa.</div>
-            <button class="money-button" type="button" onclick="showMoneyStep(4)">❤️ Ya recibí mi regalo</button>
+            <br/><button class="money-button" type="button" onclick="showMoneyStep(4)">❤️ Ya recibí mi regalo</button>
             <div class="money-steps"><span></span><span></span><span class="active"></span><span></span></div>
           </div>
 
