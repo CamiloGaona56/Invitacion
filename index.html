@@ -1201,7 +1201,7 @@ body::after{
           Desliza el dedo sobre el recuadro
         </div>
 
-        <button class="progress-note" id="note-2" type="button" onclick="startMoneyFlow()" aria-label="Descubrir el regalo">¡Descubierto! Continuar →</button>
+        <button class="progress-note" id="note-2" type="button" onclick="startMoneyFlow()" aria-label="Continuar con el regalo">Descubierto. Continuar →</button>
 
         <div class="money-flow" id="money-flow" aria-live="polite">
           <div class="money-icon">💌</div>
@@ -1481,8 +1481,13 @@ function fillContent(n, data){
     document.getElementById('hidden-g1-title').textContent = data.title;
     document.getElementById('hidden-g1-sub').textContent = data.sub;
   }else if(n === 2){
-    document.getElementById('hidden-g2-title').textContent = data.title;
-    document.getElementById('hidden-g2-sub').textContent = data.sub;
+    /*
+     * REGALO Nº 2 — El raspa debe ser misterioso.
+     * No usamos data.title/data.sub de Supabase aquí porque podrían
+     * contener el monto del regalo. El monto solo se revela al final.
+     */
+    document.getElementById('hidden-g2-title').textContent = '¡Encontraste tu regalo!';
+    document.getElementById('hidden-g2-sub').textContent = 'Pero todavía no voy a decirte cuánto es... ❤️';
   }else if(n === 3){
     // La carta oficial está embebida como arte del PDF original.
     // Supabase continúa validando el desbloqueo, pero no reemplaza la carta.
