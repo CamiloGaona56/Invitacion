@@ -112,17 +112,19 @@ body::after{
 }
 
 .pages{
-  display:flex;
-  width:400%;
+  position:relative;
+  width:100%;
   height:100%;
-  transition:transform .68s cubic-bezier(.65,0,.25,1);
+  perspective:1800px;
+  transform-style:preserve-3d;
+  overflow:hidden;
 }
 
 .page{
-  position:relative;
-  width:25%;
+  position:absolute;
+  inset:0;
+  width:100%;
   height:100%;
-  flex:0 0 25%;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -134,6 +136,87 @@ body::after{
 }
 
 .page::-webkit-scrollbar{display:none}
+
+/* ---------- EFECTO LIBRO / PASO DE PÁGINA ---------- */
+.page{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform-style:preserve-3d;
+  transform-origin:left center;
+  transform:rotateY(180deg);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:1;
+  box-shadow:inset -1px 0 rgba(59,18,39,.08);
+  transition:
+    transform .78s cubic-bezier(.65,.02,.24,1),
+    opacity .15s linear,
+    visibility 0s linear .78s;
+}
+
+.page::marker{display:none}
+
+.page.is-current{
+  transform:rotateY(0deg);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  z-index:5;
+  transition:
+    transform .78s cubic-bezier(.65,.02,.24,1),
+    opacity .15s linear,
+    visibility 0s;
+}
+
+.page.is-after{
+  transform:rotateY(180deg);
+  opacity:0;
+  visibility:hidden;
+  z-index:2;
+}
+
+.page.is-before{
+  transform:rotateY(0deg);
+  opacity:0;
+  visibility:hidden;
+  z-index:3;
+}
+
+.page.turning-forward{
+  transform:rotateY(-180deg);
+  opacity:1;
+  visibility:visible;
+  pointer-events:none;
+  z-index:8;
+}
+
+.page.turning-backward{
+  transform-origin:right center;
+  transform:rotateY(180deg);
+  opacity:1;
+  visibility:visible;
+  pointer-events:none;
+  z-index:8;
+}
+
+/* sombra que simula el lomo del libro */
+.page.is-current::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:18px;
+  border-radius:inherit;
+  background:linear-gradient(90deg,rgba(59,18,39,.08),transparent);
+  opacity:.55;
+  pointer-events:none;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .page{transition:none !important;transform:rotateY(0deg) !important}
+}
 
 .page::before,
 .page::after{
@@ -296,6 +379,126 @@ body::after{
   font-style:italic;
 }
 
+/* ---------- PORTADA DE CUMPLEAÑOS ---------- */
+.birthday-cover{
+  background:
+    radial-gradient(circle at 50% 18%,rgba(217,193,142,.22),transparent 30%),
+    linear-gradient(145deg,#FBF3E8,#EFE0CE 52%,#E7D3BE);
+}
+
+.birthday-cover .page-content{
+  justify-content:center;
+  padding:26px;
+}
+
+.birthday-kicker{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.birthday-title{
+  margin:0;
+  color:var(--deep-burgundy);
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(46px,13vw,70px);
+  font-weight:500;
+  line-height:.9;
+}
+
+.birthday-script{
+  margin:9px 0 23px;
+  color:var(--burgundy);
+  font-family:'Parisienne',cursive;
+  font-size:clamp(54px,15vw,78px);
+  line-height:.9;
+}
+
+.birthday-line{
+  width:74px;
+  height:1px;
+  margin:0 auto 22px;
+  background:var(--gold);
+}
+
+.birthday-message{
+  max-width:300px;
+  margin:0 auto 28px;
+  color:var(--muted);
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  line-height:1.45;
+}
+
+.birthday-seal{
+  width:92px;
+  height:92px;
+  margin:0 auto 25px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(178,138,74,.55);
+  border-radius:50%;
+  color:var(--burgundy);
+  box-shadow:0 12px 28px rgba(59,18,39,.09);
+}
+
+.birthday-seal svg{width:38px;height:38px}
+
+.birthday-cover .cta{
+  padding-inline:32px;
+}
+
+.final-cover{
+  background:
+    radial-gradient(circle at 50% 25%,rgba(217,193,142,.18),transparent 30%),
+    linear-gradient(145deg,#FBF3E8,#EAD9C7 55%,#F4E8D9);
+}
+
+.final-cover .page-content{
+  padding:28px;
+}
+
+.final-ornament{
+  width:64px;
+  height:64px;
+  margin-bottom:20px;
+  color:var(--gold);
+}
+
+.final-title{
+  margin:0;
+  color:var(--burgundy);
+  font-family:'Parisienne',cursive;
+  font-size:clamp(52px,14vw,72px);
+  line-height:.9;
+}
+
+.final-subtitle{
+  max-width:315px;
+  margin:18px auto 24px;
+  color:var(--deep-burgundy);
+  font-family:'Cormorant Garamond',serif;
+  font-size:25px;
+  line-height:1.18;
+}
+
+.final-copy{
+  max-width:300px;
+  margin:0 auto 28px;
+  color:var(--muted);
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  line-height:1.5;
+}
+
+.final-sign{
+  color:var(--burgundy);
+  font-family:'Parisienne',cursive;
+  font-size:31px;
+}
+
 /* gifts */
 .gift-label{margin-bottom:12px}
 
@@ -397,6 +600,9 @@ body::after{
 }
 
 .progress-note{
+  border:0;
+  background:transparent;
+  cursor:pointer;
   min-height:18px;
   margin-top:9px;
   color:var(--burgundy);
@@ -409,9 +615,12 @@ body::after{
 }
 
 .progress-note.show{
-  opacity:.85;
+  opacity:.95;
   transform:translateY(0);
+  pointer-events:auto;
 }
+
+.progress-note:not(.show){pointer-events:none}
 
 /* carta */
 .letter-card{
@@ -732,6 +941,41 @@ body::after{
 
   <div class="pages" id="pages">
 
+    <!-- PÁGINA 0 — PORTADA DE CUMPLEAÑOS -->
+    <section class="page birthday-cover is-current" id="page-intro" aria-label="Portada de cumpleaños">
+      <svg class="botanical left" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M20 145C34 115 48 80 62 38"/>
+        <path d="M37 108C24 102 17 94 13 83C28 84 36 91 37 108Z"/>
+        <path d="M49 78C62 70 69 61 70 49C57 52 50 61 49 78Z"/>
+        <path d="M28 126C16 120 9 112 7 102C19 104 27 112 28 126Z"/>
+        <path d="M58 57C70 49 77 40 78 29C66 33 59 42 58 57Z"/>
+      </svg>
+      <svg class="botanical right" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M20 145C34 115 48 80 62 38"/>
+        <path d="M37 108C24 102 17 94 13 83C28 84 36 91 37 108Z"/>
+        <path d="M49 78C62 70 69 61 70 49C57 52 50 61 49 78Z"/>
+        <path d="M28 126C16 120 9 112 7 102C19 104 27 112 28 126Z"/>
+        <path d="M58 57C70 49 77 40 78 29C66 33 59 42 58 57Z"/>
+      </svg>
+      <div class="page-content">
+        <div class="birthday-kicker">UNA PEQUEÑA HISTORIA PARA TI</div>
+        <div class="birthday-seal" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25">
+            <path d="M17 26h30v23H17z" rx="2"/>
+            <path d="M32 26v23M13 20h38v8H13z"/>
+            <path d="M32 20c-6-1-12-4-11-9 1-5 9-4 11 9Zm0 0c6-1 12-4 11-9-1-5-9-4-11 9Z"/>
+          </svg>
+        </div>
+        <h1 class="birthday-title">Feliz</h1>
+        <div class="birthday-script">cumpleaños</div>
+        <div class="birthday-line"></div>
+        <p class="birthday-message">Hoy no quería regalarte solo algo.<br>Quería regalarte un pedacito de nuestra historia.</p>
+        <button class="cta" aria-label="Comenzar nuestra historia" onclick="goTo(1)">
+          Abrir nuestra historia →
+        </button>
+      </div>
+    </section>
+
     <!-- PÁGINA 1 — PORTADA -->
     <section class="page" id="page-0">
       <svg class="botanical left" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="1">
@@ -829,7 +1073,7 @@ body::after{
           Desliza el dedo sobre el recuadro
         </div>
 
-        <div class="progress-note" id="note-1">¡Descubierto! Sigamos ✧</div>
+        <button class="progress-note" id="note-1" type="button" onclick="goTo(3)" aria-label="Continuar al segundo regalo">¡Descubierto! Continuar →</button>
       </div>
 
       <div class="lock-overlay" id="lock-1">
@@ -877,7 +1121,7 @@ body::after{
           Desliza el dedo sobre el recuadro
         </div>
 
-        <div class="progress-note" id="note-2">¡Descubierto! Falta lo último ✧</div>
+        <button class="progress-note" id="note-2" type="button" onclick="goTo(4)" aria-label="Continuar a la carta final">¡Descubierto! Ver carta →</button>
       </div>
 
       <div class="lock-overlay" id="lock-2">
@@ -936,6 +1180,35 @@ body::after{
       </div>
     </section>
 
+    <!-- PÁGINA 6 — FINAL -->
+    <section class="page final-cover" id="page-final" aria-label="Final de la historia">
+      <svg class="botanical left" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M20 145C34 115 48 80 62 38"/>
+        <path d="M37 108C24 102 17 94 13 83C28 84 36 91 37 108Z"/>
+        <path d="M49 78C62 70 69 61 70 49C57 52 50 61 49 78Z"/>
+        <path d="M28 126C16 120 9 112 7 102C19 104 27 112 28 126Z"/>
+        <path d="M58 57C70 49 77 40 78 29C66 33 59 42 58 57Z"/>
+      </svg>
+      <svg class="botanical right" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M20 145C34 115 48 80 62 38"/>
+        <path d="M37 108C24 102 17 94 13 83C28 84 36 91 37 108Z"/>
+        <path d="M49 78C62 70 69 61 70 49C57 52 50 61 49 78Z"/>
+        <path d="M28 126C16 120 9 112 7 102C19 104 27 112 28 126Z"/>
+        <path d="M58 57C70 49 77 40 78 29C66 33 59 42 58 57Z"/>
+      </svg>
+      <div class="page-content">
+        <svg class="final-ornament" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.25">
+          <path d="M32 53C14 42 7 29 13 19C18 10 28 12 32 22C36 12 46 10 51 19C57 29 50 42 32 53Z"/>
+          <path d="M32 22V53"/>
+        </svg>
+        <div class="eyebrow">Y ESTA HISTORIA APENAS COMIENZA</div>
+        <h2 class="final-title">Feliz cumpleaños</h2>
+        <div class="final-subtitle">Gracias por ser parte de mis días, de mis recuerdos y de todo lo bonito que todavía nos espera.</div>
+        <div class="final-copy">Que este nuevo año de tu vida esté lleno de momentos que quieras guardar para siempre.<br><br>Y si puedo pedir un deseo, es que muchos de ellos sean conmigo.</div>
+        <div class="final-sign">Con todo mi amor ♡</div>
+      </div>
+    </section>
+
   </div>
 
   <button class="nav-arrow left hidden" id="arrow-left"
@@ -952,62 +1225,101 @@ body::after{
     </svg>
   </button>
 
-  <div class="dots" id="dots" aria-label="Progreso de la invitación">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="dots" id="dots" aria-label="Progreso de la historia">
+    <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const TOTAL_PAGES = 4;
+const TOTAL_PAGES = 6;
 let currentPage = 0;
+let isTurning = false;
 
-function updateNav(){
-  document.getElementById('pages').style.transform =
-    `translateX(-${currentPage * 25}%)`;
+const pageEls = Array.from(document.querySelectorAll('.page'));
+
+function updatePageClasses(){
+  pageEls.forEach((page,i)=>{
+    page.classList.remove('is-current','is-before','is-after');
+    if(i === currentPage) page.classList.add('is-current');
+    else if(i < currentPage) page.classList.add('is-before');
+    else page.classList.add('is-after');
+  });
 
   document.querySelectorAll('.dot').forEach((d,i)=>{
     d.classList.toggle('active', i === currentPage);
   });
 
-  document.getElementById('arrow-left')
-    .classList.toggle('hidden', currentPage === 0);
-
-  document.getElementById('arrow-right')
-    .classList.toggle('hidden', currentPage === TOTAL_PAGES - 1);
+  document.getElementById('arrow-left').classList.toggle('hidden', currentPage === 0);
+  document.getElementById('arrow-right').classList.toggle('hidden', currentPage === TOTAL_PAGES - 1);
 }
 
 function goTo(n){
-  if(n < 0 || n > TOTAL_PAGES - 1) return;
-  currentPage = n;
-  updateNav();
+  if(isTurning || n < 0 || n > TOTAL_PAGES - 1 || n === currentPage) return;
+
+  const from = currentPage;
+  const to = n;
+  const current = pageEls[from];
+
+  isTurning = true;
+  current.classList.remove('is-current','is-before','is-after');
+  current.classList.add(to > from ? 'turning-forward' : 'turning-backward');
+
+  currentPage = to;
+  updatePageClasses();
+
+  /* La página que gira debe permanecer encima hasta terminar. */
+  current.classList.remove('is-before','is-after');
+  current.classList.add(to > from ? 'turning-forward' : 'turning-backward');
+
+  window.setTimeout(()=>{
+    current.classList.remove('turning-forward','turning-backward');
+    updatePageClasses();
+    isTurning = false;
+  },780);
 }
 
-/* swipe support */
+/* ---------- SWIPE / GESTO DE PASAR PÁGINA ---------- */
 let touchStartX = 0;
+let touchStartY = 0;
+let swipeBlocked = false;
 
-document.getElementById('app').addEventListener('touchstart', e=>{
-  touchStartX = e.changedTouches[0].clientX;
+const app = document.getElementById('app');
+
+app.addEventListener('touchstart', e=>{
+  const target = e.target;
+  swipeBlocked = !!target.closest('.scratch-canvas, input, button, .letter-card');
+  if(swipeBlocked) return;
+
+  const touch = e.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
 },{passive:true});
 
-document.getElementById('app').addEventListener('touchend', e=>{
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if(Math.abs(dx) > 50){
+app.addEventListener('touchend', e=>{
+  if(swipeBlocked){
+    swipeBlocked = false;
+    return;
+  }
+
+  const touch = e.changedTouches[0];
+  const dx = touch.clientX - touchStartX;
+  const dy = touch.clientY - touchStartY;
+
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.25){
     if(dx < 0) goTo(currentPage + 1);
     else goTo(currentPage - 1);
   }
 },{passive:true});
 
-/* keyboard support */
+/* ---------- TECLADO ---------- */
 document.addEventListener('keydown', e=>{
   if(e.key === 'ArrowRight') goTo(currentPage + 1);
   if(e.key === 'ArrowLeft') goTo(currentPage - 1);
 });
 
-updateNav();
+updatePageClasses();
 
 /* ---------- SUPABASE ---------- */
 const SUPABASE_URL = 'https://opunnhrogirnyxgtvizy.supabase.co';
@@ -1091,9 +1403,8 @@ async function tryUnlock(n){
       errorEl.classList.remove('show');
       fillContent(n,data);
 
-      if(n < TOTAL_PAGES - 1){
-        setTimeout(()=>goTo(n + 1),650);
-      }
+      /* El desbloqueo ya no cambia de página automáticamente.
+         La persona decide cuándo continuar. */
     }else{
       errorEl.textContent = 'Ese no es, inténtalo de nuevo';
       errorEl.classList.add('show');
