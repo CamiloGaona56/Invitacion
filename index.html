@@ -1189,8 +1189,8 @@ body::after{
               <circle cx="12" cy="12" r="3"/>
               <path d="M6 6v0M18 18v0"/>
             </svg>
-            <div class="reveal-title" id="hidden-g2-title"></div>
-            <div class="reveal-sub" id="hidden-g2-sub"></div>
+            <div class="reveal-title" id="hidden-g2-title">¡Encontraste tu regalo!</div>
+            <div class="reveal-sub" id="hidden-g2-sub">Pero todavía no voy a decirte cuánto es... ❤️</div>
           </div>
           <canvas class="scratch-canvas" id="scratch-2" aria-label="Tarjeta para raspar"></canvas>
         </div>
@@ -1482,10 +1482,9 @@ function fillContent(n, data){
     document.getElementById('hidden-g1-title').textContent = data.title;
     document.getElementById('hidden-g1-sub').textContent = data.sub;
   }else if(n === 2){
-    // REGALO #2: el raspa solo revela el mensaje misterioso.
-    // No usar title/sub de Supabase aquí para evitar revelar el monto.
-    document.getElementById('hidden-g2-title').textContent = '';
-    document.getElementById('hidden-g2-sub').textContent = 'Pero todavía no voy a decirte cuánto es... ❤️';
+    // REGALO #2: contenido fijo y misterioso.
+    // IMPORTANTE: no usamos data.title/data.sub de Supabase aquí.
+    // Así el monto guardado en Supabase nunca aparece en el scratch.
   }else if(n === 3){
     // La carta oficial está embebida como arte del PDF original.
     // Supabase continúa validando el desbloqueo, pero no reemplaza la carta.
