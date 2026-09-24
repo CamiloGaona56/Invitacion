@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="invitation-version" content="regalo2-misterioso-v1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F3E7D8">
 <title>Una sorpresa para ti</title>
@@ -1481,12 +1482,9 @@ function fillContent(n, data){
     document.getElementById('hidden-g1-title').textContent = data.title;
     document.getElementById('hidden-g1-sub').textContent = data.sub;
   }else if(n === 2){
-    /*
-     * REGALO Nº 2 — El raspa debe ser misterioso.
-     * No usamos data.title/data.sub de Supabase aquí porque podrían
-     * contener el monto del regalo. El monto solo se revela al final.
-     */
-    document.getElementById('hidden-g2-title').textContent = '¡Encontraste tu regalo!';
+    // REGALO #2: el raspa solo revela el mensaje misterioso.
+    // No usar title/sub de Supabase aquí para evitar revelar el monto.
+    document.getElementById('hidden-g2-title').textContent = '';
     document.getElementById('hidden-g2-sub').textContent = 'Pero todavía no voy a decirte cuánto es... ❤️';
   }else if(n === 3){
     // La carta oficial está embebida como arte del PDF original.
