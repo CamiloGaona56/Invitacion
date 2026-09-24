@@ -1596,7 +1596,7 @@ function revealMoneyAmount(){
   const finalButton = document.getElementById('money-final-button');
   if(!amountEl) return;
 
-  const sequence = ['$', '$2', '$20', '$200', '$2.000', '$20.000', formatMoney(regalo)];
+  const sequence = ['$', '$3', '$30', '$300', '$3.000', '$30.000', formatMoney(regalo)];
   let i = 0;
   amountEl.textContent = sequence[0];
   if(statusEl) statusEl.textContent = 'Preparando tu sorpresa...';
